@@ -20,7 +20,7 @@ We also created HTML-based user interfaces to demonstrate these CRUD calls in ac
 
 My Dev enviroment is quite different from Code Institute so I couldn't follow the instructions.
 
-As a main OS im using [Fedora Silverblue](https://pages.github.com/) which means all development is done within containers using [Podman](https://podman.io/).
+As a main OS im using [Fedora Silverblue](https://silverblue.fedoraproject.org/) which means all development is done within containers using [Podman](https://podman.io/).
 
 ## [Distrobox](https://github.com/89luca89/distrobox)
 Simply put it's a fancy wrapper around podman or docker to create and start containers highly integrated with the hosts.
