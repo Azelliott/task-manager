@@ -1,108 +1,139 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome USER_NAME,
+# Task manager
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Task manager is built using Flask, the SLQAlchemy ORM, and Materialize frontend framework.
+For the Learning Outcomes, we learned how to perform full CRUD functionality, which
+allows us to create, read, update, and delete items on our database.
+This is done in the context of a Flask application.
+We also created HTML-based user interfaces to demonstrate these CRUD calls in action.
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+# Technologies used
+* Flask 
+* SQLAlchemy
+* HTML5
+* Materialize framework
+* PostgreSQL
 
-## Gitpod Reminders
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+# Initial setup
 
-`python3 -m http.server`
+My Dev enviroment is quite different from Code Institute so I couldn't follow the instructions.
 
-A blue button should appear to click: _Make Public_,
+As a main OS im using [Fedora Silverblue](https://pages.github.com/) which means all development is done within containers using [Podman](https://podman.io/).
 
-Another blue button should appear to click: _Open Browser_.
+## [Distrobox](https://github.com/89luca89/distrobox)
+Simply put it's a fancy wrapper around podman or docker to create and start containers highly integrated with the hosts.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+The distrobox environment is based on an OCI image. This image is used to create a container that seamlessly integrates with the rest of the operating system by providing access to the user's home directory, the Wayland and X11 sockets, networking, removable devices (like USB sticks), systemd journal, SSH agent, D-Bus, ulimits, /dev and the udev database, etc...
+Image used for development was Fedora 36.
 
-A blue button should appear to click: _Make Public_,
+First, create the enviroment with separate /home directory (to avoid polluting host OS with configs) use:
 
-Another blue button should appear to click: _Open Browser_.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
-------
-
-## Release History
-
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
-
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
-
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
-
-**July 2 2021:** Remove extensions that are not available in Open VSX.
-
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
-
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
-
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
-
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
-
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
+```bash
+distrobox create --name image-name --image fedora:36 --home /path/to/folder
 ```
 
-**Anything more?**
+## Postgres setup
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+Since you can't run SystemD inside the main dev container, this one liner downloads and runs the Postgres container to attach to (replace CONTAINER-NAME and username):
 
----
+```bash
+podman run --name CONTAINER-NAME -p 5432:5432 -dit -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_USER=postgresuser -e POSTGRES_PASSWORD=postgres docker.io/postgres:12-alpine
+```
 
-Happy coding!
+If you need manual setup (role or db creation, psql commands, etc), run a bash session inside the container:
+
+```bash
+podman exec -it CONTAINERNAME bash
+```
+
+After this, start with `podman start CONTAINERNAME` (or `stop` or `restart` or `rm` (if you want to delete and start over)).
+
+Postgres url format:
+
+`DATABASE_URL=postgres://{user}:{password}@{hostname}:{port}/{database-name}`
+
+If you don’t specify the `PGUSER` environment variable, then `psql` will assume you want to use the current OS user as your database user name. In this case, you are using `root` as your OS user, and you will attempt to log in as `root`, but that user doesn’t exist in the database.
+
+You’ll need to either call `psql -U postgres`, or `su - Postgres` first.
+
+### Create database
+
+```sql
+CREATE DATABASE taskmanager;
+```
+
+### Connect to database, quit psql and exit the container
+
+```sql
+\c taskmanager;
+\q;
+exit
+```
+
+Back in the terminal editor lesson moves on to create the tables we previously coded in Python.
+
+Get into python REPL, import db and create tables:
+
+```bash
+python3
+from taskmanager import db
+db.create_all()
+exit()
+```
+
+- There was an error due to not having the Postgres user on the database, fix provided below
+    
+    ```bash
+    psycopg2.OperationalError: connection to server at "localhost" (::1), port 5432 failed: FATAL: role "postgres" does not exist
+    ```
+    
+    To fix it, simply create a new user named `postgres` (using the user we previously created)v with the option `--superuser` using the `createuser` utility that comes with Postgres. The utility can be found in the Postgres' `bin` directory. e.g.
+    
+    ```
+    createuser -U postgresuser --superuser postgres
+    ```
+    
+
+To check if the tables were properly created, inside the container type 
+
+```bash
+psql -U postgresuser -d taskmanager
+taskmanager=# \dt
+List of relations
+Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+public | category | table | postgres
+public | task     | table | postgres
+(2 rows)
+```
+
+## Demo
+
+https://taskmanager-flask-azelliott.herokuapp.com/
+
+## Screenshots
+
+Home page
+![ScreenShot](taskmanager/static/images/screenshots/home.png)
+
+Add task
+![ScreenShot](taskmanager/static/images/screenshots/add-task.png)
+
+Categories
+![ScreenShot](taskmanager/static/images/screenshots/categories.png)
+
+## Deployment
+
+clone the repository with
+```bash 
+git clone https://github.com/Azelliott/task-manager
+```
+
+* Rename `env_sample.py` to `env.py` and fill out the details.
+* Install requirements (Postgres, Flask, SQLAlchemy)
+* Run local application with:
+```bash
+python3 run.py
+```
